@@ -14,25 +14,17 @@ body{
   padding:40px;
 }
 
-/* 标题 */
-.header{
-  text-align:center;
-  margin-bottom:40px;
-}
+.header{text-align:center;margin-bottom:40px;}
 .header h1{
   font-size:34px;
   background:linear-gradient(90deg,#00f5ff,#ff00ff);
   -webkit-background-clip:text;
   color:transparent;
 }
-.header p{
-  color:#aaa;
-  margin-top:10px;
-}
+.header p{color:#aaa;margin-top:10px;}
 
-/* 容器 */
 .container{
-  max-width:950px;
+  max-width:900px;
   margin:auto;
   padding:30px;
   border-radius:20px;
@@ -41,7 +33,6 @@ body{
   border:1px solid rgba(255,255,255,0.08);
 }
 
-/* 图框 */
 .frame{
   border:2px dashed rgba(255,255,255,0.2);
   border-radius:15px;
@@ -49,15 +40,9 @@ body{
   margin-bottom:20px;
 }
 
-/* 标签 */
-.label{
-  font-size:14px;
-  color:#aaa;
-  margin-bottom:5px;
-}
+.label{font-size:14px;color:#aaa;margin-bottom:5px;}
 
-/* 输入 */
-input,select{
+input{
   width:100%;
   padding:12px;
   margin-bottom:12px;
@@ -67,25 +52,22 @@ input,select{
   color:#fff;
 }
 
-/* 按钮 */
 .btn{
   width:100%;
   padding:16px;
   border:none;
   border-radius:12px;
-  font-weight:bold;
   background:linear-gradient(90deg,#ff00ff,#00f5ff);
-  cursor:pointer;
+  color:#fff;
   font-size:16px;
+  cursor:pointer;
 }
 
-/* 结果 */
 .result{
-  max-width:950px;
+  max-width:900px;
   margin:40px auto;
 }
 
-/* 卡片 */
 .item{
   display:flex;
   justify-content:space-between;
@@ -97,13 +79,8 @@ input,select{
   border:1px solid rgba(255,255,255,0.1);
 }
 
-.text{
-  flex:1;
-  font-size:14px;
-  line-height:1.6;
-}
+.text{flex:1;font-size:14px;line-height:1.6;}
 
-/* 复制按钮 */
 .copy{
   background:#ff00ff;
   border:none;
@@ -113,15 +90,7 @@ input,select{
   cursor:pointer;
 }
 
-.copy.copied{
-  background:#555;
-}
-
-/* 一键复制 */
-.copyAll{
-  text-align:center;
-  margin-top:20px;
-}
+.copyAll{text-align:center;margin-top:20px;}
 .copyAll button{
   padding:12px 30px;
   border:none;
@@ -139,7 +108,7 @@ input,select{
     🎤 卡通综艺手举牌生成器  
     <span style="font-size:18px;color:#00f5ff;">｜古月AI智能体</span>
   </h1>
-  <p>古月AI出品 · 综艺级视觉生成引擎 · 商业级手举牌设计工具</p>
+  <p>极简输入 · 自动生成20组商业级手举牌提示词</p>
 </div>
 
 <div class="container">
@@ -152,34 +121,12 @@ input,select{
     <div class="label">副标题（可选）</div>
     <input id="sub" placeholder="例：不服来辩">
 
-    <div class="label">风格</div>
-    <select id="style">
-      <option>综艺卡通</option>
-      <option>潮流贴纸</option>
-      <option>活泼可爱</option>
-    </select>
-
-    <div class="label">情绪氛围</div>
-    <select id="mood">
-      <option>搞笑</option>
-      <option>兴奋</option>
-      <option>炸裂</option>
-      <option>可爱</option>
-    </select>
-
-    <div class="label">使用场景</div>
-    <select id="scene">
-      <option>活动打卡</option>
-      <option>商场互动</option>
-      <option>直播间</option>
-    </select>
-
     <div class="label">元素关键词（可选）</div>
     <input id="extra" placeholder="例：比心 星星 礼盒">
 
   </div>
 
-  <button class="btn" onclick="generate()">✨ 生成20组提示词</button>
+  <button class="btn" onclick="generate()">✨ 一键生成20组提示词</button>
 
 </div>
 
@@ -187,23 +134,23 @@ input,select{
 
 <script>
 
-// 素材库
-const shapes=["气泡形","爆炸贴","不规则贴纸","云朵形","对话框","波浪边贴纸"]
-const colors=["荧光撞色渐变","粉蓝渐变","紫橙渐变","红黄撞色","高饱和多彩渐变"]
+// 随机库
+const shapes=["气泡形","爆炸贴","云朵形","对话框","不规则贴纸"]
+const colors=["荧光撞色渐变","粉蓝渐变","紫橙渐变","红黄撞色","高饱和渐变"]
 const fonts=["综艺体","粗黑体","卡通圆体","手写体"]
 const elements=["大拇指","比心","耶","红包","礼盒","星星","闪电","彩带","奖杯"]
 
 const slogans=[
-"拍照神器","全场焦点","出片率爆炸","氛围感拉满",
-"镜头必抢","互动感超强","人群吸睛王","传播力爆棚"
+"拍照神器","出片率爆炸","氛围感拉满",
+"全场焦点","互动感超强","传播力爆棚"
 ]
 
-// 随机
+// 随机函数
 function r(arr){
   return arr[Math.floor(Math.random()*arr.length)]
 }
 
-// 结构随机
+// 结构变化
 const structures=[
 ["主","副","形","色","字","元素","标语"],
 ["形","主","色","副","字","标语","元素"],
@@ -211,7 +158,7 @@ const structures=[
 ]
 
 // 单条生成
-function createOne(main,sub,style,mood,scene,extra){
+function createOne(main,sub,extra){
 
   let map={
     主:`主标题「${main}」`,
@@ -226,14 +173,14 @@ function createOne(main,sub,style,mood,scene,extra){
   let order=r(structures)
   let content=order.map(k=>map[k]).join("，")
 
-  return `卡通综艺风KT板手举牌设计，${content}，${style}风格，${mood}氛围，适用于${scene}，厚描边视觉，白色粗描边+黑色细外描边，贴纸立体效果，纯色背景，正面视角，居中构图，高清细节，商业可落地`
+  return `卡通综艺风KT板手举牌设计，${content}，厚描边风格，白色粗描边+黑色细外描边，贴纸立体效果，纯色背景，正面视角，居中构图，高清细节，商业可落地`
 }
 
-// 生成20条去重
-function generateSet(main,sub,style,mood,scene,extra){
+// 生成20条
+function generateSet(main,sub,extra){
   let set=new Set()
   while(set.size<20){
-    set.add(createOne(main,sub,style,mood,scene,extra))
+    set.add(createOne(main,sub,extra))
   }
   return [...set]
 }
@@ -242,9 +189,6 @@ function generateSet(main,sub,style,mood,scene,extra){
 function generate(){
   let main=document.getElementById("main").value.trim()
   let sub=document.getElementById("sub").value.trim()
-  let style=document.getElementById("style").value
-  let mood=document.getElementById("mood").value
-  let scene=document.getElementById("scene").value
   let extra=document.getElementById("extra").value
 
   if(!main){
@@ -252,7 +196,7 @@ function generate(){
     return
   }
 
-  let list=generateSet(main,sub,style,mood,scene,extra)
+  let list=generateSet(main,sub,extra)
 
   let html=""
   list.forEach((item,i)=>{
@@ -272,11 +216,10 @@ function generate(){
   window.allData=list
 }
 
-// 单条复制
+// 复制
 function copyText(btn,text){
   navigator.clipboard.writeText(text)
   btn.innerText="已复制"
-  btn.classList.add("copied")
 }
 
 // 全部复制
