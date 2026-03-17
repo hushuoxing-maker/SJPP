@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>卡通综艺手举牌高级生成器 - 古月AI智能体</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei";}
+body{
+  padding:40px;
+  background:linear-gradient(135deg,#6a9cff,#7ce0c9,#ffb5e6,#ffd580);
+  background-size:400% 400%;
+  animation:bgmove 20s infinite;
+  color:#fff;
+}
+@keyframes bgmove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+.container{max-width:1350px;margin:auto;}
+.title{
+  font-size:38px;font-weight:900;text-align:center;margin-bottom:10px;
+  background:linear-gradient(90deg,#fff,#ffe9a6,#ff7b7b);
+  -webkit-background-clip:text;color:transparent;
+}
+.sub{text-align:center;opacity:0.85;margin-bottom:40px;font-size:16px;}
+.panel{
+  background:linear-gradient(145deg,rgba(255,255,255,0.2),rgba(255,255,255,0.05));
+  backdrop-filter:blur(20px);padding:30px;border-radius:22px;
+  box-shadow:0 25px 70px rgba(0,0,0,0.4);margin-bottom:40px;
+}
+input{
+  width:100%;padding:16px;border-radius:14px;border:none;margin-top:10px;
+  margin-bottom:20px;font-size:16px;background:rgba(255,255,255,0.12);color:#fff;
+}
+button{
+  width:100%;padding:16px;border:none;border-radius:14px;
+  font-size:16px;font-weight:800;cursor:pointer;
+  background:linear-gradient(135deg,#ff7b7b,#ffd36f);color:white;transition:0.3s;
+}
+button:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.results{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:26px;
+}
+.card{
+  background:linear-gradient(145deg,rgba(255,255,255,0.25),rgba(255,255,255,0.05));
+  backdrop-filter:blur(22px);padding:22px;border-radius:18px;
+  box-shadow:0 15px 60px rgba(0,0,0,0.35);transition:0.3s;position:relative;overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,#ff7b7b,#ffd36f);
+}
+.card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 40px 100px rgba(0,0,0,0.6);}
+.cardTitle{font-weight:700;margin-bottom:12px;color:#ff7b7b;}
+.prompt{white-space:pre-wrap;line-height:1.7;font-size:14px;opacity:0.95;}
+.copy{margin-top:14px;padding:10px 16px;border:none;border-radius:10px;
+  background:#ff7b7b;color:white;cursor:pointer;font-weight:700;}
+.copy:hover{background:#ffd36f;color:#333;}
+</style>
+</head>
+
+<body>
+<div class="container">
+<div class="title">卡通综艺手举牌高级生成器</div>
+<div class="sub">一次生成20组随机化手举牌提示词 · 可直接用于AI绘画生成 · 高清插画风格</div>
+
+<div class="panel">
+输入手举牌文字：
+<input id="text" placeholder="例如：恭喜发财 / 点赞支持 / 老板大气">
+<button onclick="create()">生成20组手举牌提示词</button>
+</div>
+
+<div id="list" class="results"></div>
+</div>
+
+<script>
+function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+const shapes=["圆角矩形手举牌","不规则异形手举牌","云朵形状手举牌","爆炸贴形状手举牌"];
+const colors=["橙黄渐变背景","粉紫渐变背景","蓝绿渐变背景","糖果色渐变背景","综艺撞色渐变背景"];
+const fonts=["粗黑综艺字体","卡通圆体","综艺粗体字","手绘卡通字体"];
+const deco=["卡通大拇指","比心手势","耶手势","红包","礼盒","星星","感叹号","箭头","爆炸贴","小锁","奖杯","彩带","气球","糖果装饰","闪光光环"];
+
+function create(){
+  let text=document.getElementById("text").value;
+  if(text==""){alert("请输入手举牌文字");return;}
+  let list=document.getElementById("list");
+  list.innerHTML="";
+  for(let i=1;i<=20;i++){
+    let decorations=[];
+    for(let j=0;j<4;j++){decorations.push(rand(deco));}
+    let prompt=`卡通综艺手举牌设计，
+手举牌文字：“${text}”
+基础造型：${rand(shapes)}，白色粗描边+轻微外阴影，比例1:1或4:3
+视觉风格：活泼卡通综艺、厚描边、手绘插画、立体贴纸感
+背景：${rand(colors)}
+文字字体：${rand(fonts)}，白色或黑色粗体字，搭配描边增强可读性
+装饰元素：${decorations.join('、')}，环绕手举牌主体
+排版：文字居中，上下分层，重要信息放大
+画面氛围：综艺节目应援、直播打Call、卡通贴纸效果
+高清插画风格，1:1比例，画面干净，可直接用于AI绘画生成`;
+    let card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`<div class="cardTitle">提示词 ${i}</div>
+<div class="prompt">${prompt}</div>
+<button class="copy" onclick="copy(this)">复制提示词</button>`;
+    list.appendChild(card);
+  }
+}
+
+function copy(btn){
+  let text=btn.previousElementSibling.innerText;
+  navigator.clipboard.writeText(text);
+  btn.innerText="已复制";
+  setTimeout(()=>{btn.innerText="复制提示词";},1500);
+}
+</script>
+</body>
+</html>
